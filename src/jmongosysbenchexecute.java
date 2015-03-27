@@ -476,7 +476,12 @@ public class jmongosysbenchexecute {
                         doc.put("c",cVal);
                         String padVal = sysbenchString(rand, "###########-###########-###########-###########-###########");
                         doc.put("pad",padVal);
-                        WriteResult wrInsert = coll.insert(doc);
+                        try {
+                            WriteResult wrInsert = coll.insert(doc);
+                        } catch (Exception e) {
+                            // do nothing here
+                            // TODO: shall just ignore E11000 duplicate key error
+                        }
                     }
 
                     globalSysbenchTransactions.incrementAndGet();
